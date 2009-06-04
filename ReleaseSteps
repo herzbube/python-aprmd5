@@ -1,0 +1,55 @@
+Purpose of this document
+------------------------
+This document lists the steps needed to make a project release.
+
+
+Before the release
+------------------
+- if necessary, update the TODO file
+- update the ChangeLog file (should have been done continuously, anyway)
+- replace the "Changes in this release" section in the README file with a
+  collection of the most important entries from the ChangeLog file and/or the
+  git log
+- make sure that the version number is up to date in the following files
+  (it should have been bumped already after the last release was made):
+  - README
+  - setup.py
+- make sure that the copyright year is up to date in the following files:
+  - aprmd5.c
+- make the source distribution tar ball by issuing the following commands (check
+  the command's output for suspicious warnings, although you can ignore warnings
+  about missing README and .DS_Store files):
+    cd <projectdir>
+    ./setup.py sdist
+- take the source distribution tar ball to another system, install it on that
+  system and try to run python-aprmd5:
+    cd ~
+    tar xfvz python-aprmd5-x.y.tar.gz
+    cd python-aprmd5-x.y
+    ./setup.py install --home=~
+    PYTHONPATH=~/lib/python python xxx
+- commit final changes (check with "git status" that nothing was forgotten)
+
+
+Make the release
+----------------
+- tag and sign the release
+  cd <projectdir>
+  git tag -s -m "tagging release x.y" x.y <commit hash>
+- update the blessed repository
+  cd <projectdir>
+  git push
+- make source distribution tar ball available on the project website
+- add the new version number to the bug tracker so that issues can be reported
+  once the release has been made public
+- update the website to announce the new release
+
+
+After the release
+-----------------
+- cleanup
+  cd <projectdir>
+  rm MANIFEST
+  rm -r build dist
+- bump the version number to the next planned release; check above under
+  "Before the release" which files are affected

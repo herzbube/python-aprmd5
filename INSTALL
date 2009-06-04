@@ -1,0 +1,48 @@
+Purpose of this document
+------------------------
+This document provides information on how to install python-aprmd5 on a target
+system. If you are an end user, read the section titled "End user installation".
+If you are a packager, skip the end user section and read on below.
+
+
+End user installation
+---------------------
+1. Download the source tar ball from the python-aprmd5 website
+2. Extract the tar ball contents
+
+     tar xfvz python-aprmd5-x.y.tar.gz
+
+3. Perform a build
+
+    cd python-aprmd5-x.y
+    ./setup.py build
+
+4. Install. If you have system administration rights, just do this: 
+
+     ./setup.py install
+
+   You might also consider installing to some prefix directory such as
+   /usr/local. In this case the command would be
+
+     ./setup.py install --prefix=/usr/local
+
+   Finally, if you want to install python-aprmd5 into your home directory, e.g.
+   because you are not the system administrator, the command looks like this
+
+    ./setup.py install --home=~
+
+5. Wherever you installed python-aprmd5, in order to use the module the folder
+   that contains the "aprmd5" package must be in your PYTHONPATH.
+
+   If you need to adjust PYTHONPATH, a good starting place might be your
+   ~/.bashrc file (if you are using bash).
+
+
+Packager information
+--------------------
+The tar ball that can be downloaded from the project website has been created
+using the Distutils Python module. In the terminology of Distutils, the tar
+ball is a so-called "source distribution" intended to be converted by a packager
+into a so-called "built distribution" (e.g. an RPM or Debian package).
+
+If you are a packager, bla bla bla

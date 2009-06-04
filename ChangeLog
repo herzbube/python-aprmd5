@@ -1,0 +1,3 @@
+Thu Jun 04 2009   "Patrick Näf" <herzbube@herzbube.ch>
+- initial project structure
+- prototype implementations that wrap apr_md5() and apr_md5_encode()

@@ -1,0 +1,34 @@
+Purpose of this document
+------------------------
+This document contains a list of minor features and technical stuff that should
+be implemented when time permits it. The TODO list is updated frequently as new
+ideas crop up during programming.
+
+For a broader view of how the project will develop over time, you should see
+the Roadmap document.
+
+
+Release blockers
+----------------
+- Determine license to use (GPL v3 or LGPL)
+- Check out project structure of python-mhash
+- Finish writing INSTALL (section "packager information")
+- Finish writing README
+- Finish writing ReleaseSteps
+- Write a version of aprmd5.c for Python 2.6
+- Make it work for all versions of libaprutil
+
+
+Priority 1 (important)
+----------------------
+None
+
+
+Priority 2 (nice to have)
+-------------------------
+None
+
+
+Priority 3 (not important)
+-------------------------
+- Register with PyPI
