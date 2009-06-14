@@ -1,3 +1,6 @@
+Sun Jun 14 2009   "Patrick Näf" <herzbube@herzbube.ch>
+- write a version of aprmd5.c for Python 2.6
+
 Thu Jun 04 2009   "Patrick Näf" <herzbube@herzbube.ch>
 - initial project structure
 - prototype implementations that wrap apr_md5() and apr_md5_encode()

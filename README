@@ -1,7 +1,7 @@
 Table of Contents
 -----------------
 1. Introduction
-2. Changes in this release
+2. Release notes
 3. License and source code
 4. Dependencies
 5. Python versions
@@ -15,10 +15,11 @@ an interface to the MD5 routines of the Apache Portable Runtime (APR) Utility
 Library (libaprutil).
 
 The libaprutil MD5 routines are used to generate salted crypt-style hashes using
-a version of MD5 modified for Apache. The resulting hashes always start with
-the prefix characters "$apr1$" in order to distinguish them from the result of
-various other crypt() variants, which use other prefixes. For instance, for
-input "foo" and salt "mYJd83wW", the result is this:
+a version of the MD5 hash algorithm modified for Apache. The resulting hashes
+always start with the prefix characters "$apr1$" in order to distinguish them
+from the result of various other crypt() variants, which use other prefixes.
+For instance, for input "foo" and salt "mYJd83wW", libaprutil produces the
+following hash:
 
   $apr1$mYJd83wW$IO.6aK3G0d4mHxcImhPX50
 
@@ -28,8 +29,8 @@ passwords, which are used by the Apache HTTP server for basic user
 authentication.
 
 
-Changes in this release
------------------------
+Release notes
+-------------
 This is python-aprmd5 0.1 (the initial release of the project).
 
 For more details see the ChangeLog document.

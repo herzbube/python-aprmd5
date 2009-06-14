@@ -15,8 +15,13 @@ Release blockers
 - Finish writing INSTALL (section "packager information")
 - Finish writing README
 - Finish writing ReleaseSteps
-- Write a version of aprmd5.c for Python 2.6
 - Make it work for all versions of libaprutil
+- Find a way how to use the system version of apr-util on my Mac; the custom
+  installed version of Python 3 (/Library/Frameworks/Python.framework/Versions/3.0)
+  adds the argument "-isysroot /Developer/SDKs/MacOSX10.4u.sdk" to the gcc
+  command line, which makes the regular system apr-util (header files in
+  /usr/include/apr-1, library file in /usr/lib) invisible to the build
+  process
 
 
 Priority 1 (important)

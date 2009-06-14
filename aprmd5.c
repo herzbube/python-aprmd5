@@ -26,12 +26,10 @@
 
 // Make "s#" use Py_ssize_t rather than int
 #define PY_SSIZE_T_CLEAN
+
 // As per Python docs: This must be included before any standard headers are
 // included.
 #include <Python.h>
-
-// Used for system()
-#include <stdlib.h>
 
 #include <apr-0/apr_md5.h>
 
@@ -140,7 +138,11 @@ static PyMethodDef AprMD5Methods[] =
   {NULL, NULL, 0, NULL}   // Sentinel
 };
 
+
 // The module definition structure.
+// Note: This exists only for Py3k
+#if PY_MAJOR_VERSION >= 3
+
 static struct PyModuleDef aprmd5module =
 {
   PyModuleDef_HEAD_INIT,
@@ -151,13 +153,28 @@ static struct PyModuleDef aprmd5module =
   AprMD5Methods
 };
 
+#endif  // #if PY_MAJOR_VERSION >= 3
+
+
 // The module’s initialization function. The initialization function must be
 // named PyInit_name, where name is the name of the module, and should be the
 // only non-static item defined in the module file. The function is called when
-// the Python program imports module spam for the first time.
+// the Python program imports the module for the first time.
 PyMODINIT_FUNC
+
+#if PY_MAJOR_VERSION >= 3
+
 PyInit_aprmd5(void)
 {
   return PyModule_Create(&aprmd5module);
 }
 
+
+#else   // #if PY_MAJOR_VERSION >= 3
+
+initaprmd5(void)
+{
+  (void) Py_InitModule("aprmd5", AprMD5Methods);
+}
+
+#endif  // #if PY_MAJOR_VERSION >= 3
