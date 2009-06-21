@@ -1,3 +1,9 @@
+Sat Jun 20 2009   "Patrick Näf" <herzbube@herzbube.ch>
+- rewrite of project description in README + setup.py
+
+Tue Jun 16 2009   "Patrick Näf" <herzbube@herzbube.ch>
+- implement remaining functions
+
 Sun Jun 14 2009   "Patrick Näf" <herzbube@herzbube.ch>
 - write a version of aprmd5.c for Python 2.6
 
