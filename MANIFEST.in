@@ -1,6 +1,7 @@
 recursive-include doc *
 recursive-include src *
 exclude doc/ReleaseSteps
+exclude doc/NOTES
 global-exclude .DS_Store
 global-exclude *.pyc
 global-exclude *.so

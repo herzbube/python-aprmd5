@@ -1,0 +1,18 @@
+Purpose of this document
+------------------------
+This document gives a broad view of the plan for future development of the
+project. There is no time schedule associated with releases. It happens when it
+happens :-)
+
+In addition to this roadmap document, there is a TODO list that contains minor
+features and technical stuff, ideas for which come up on-the-fly. If something
+on the TODO list becomes important, it is possible to move it from there to
+this roadmap.
+
+
+Version 0.2
+- implement working with md5 object instead of exposing apr_md5_init(),
+  apr_md5_update() and apr_md5_final()
+
+Version 0.1
+- first version suitable for public release
