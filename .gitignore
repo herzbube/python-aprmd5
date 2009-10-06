@@ -1,3 +1,4 @@
 # Build products
 build/
 *.so
+*.pyc

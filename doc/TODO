@@ -10,19 +10,15 @@ the Roadmap document.
 
 Release blockers
 ----------------
+- Add unit tests
 - Determine license to use (GPL v3 or LGPL)
 - Check out project structure of python-mhash
 - Finish writing INSTALL (section "packager information")
 - Finish writing README; among other things, document how to switch between
   major versions of libaprutil in the "libaprutil version" section
 - Finish writing ReleaseSteps
-- Make it work for all versions of libaprutil
-- Find a way how to use the system version of apr-util on my Mac; the custom
-  installed version of Python 3 (/Library/Frameworks/Python.framework/Versions/3.0)
-  adds the argument "-isysroot /Developer/SDKs/MacOSX10.4u.sdk" to the gcc
-  command line, which makes the regular system apr-util (header files in
-  /usr/include/apr-1, library file in /usr/lib) invisible to the build
-  process
+- Test Debian build configuration
+- Add Bugzilla issues for all relevant TODOs
 
 
 Priority 1 (important)
@@ -39,8 +35,16 @@ Priority 2 (nice to have)
     2) Calling update() on the object (corresponds to calling apr_md5_update())
     3) Calling digest() on the object (corresponds to calling apr_md5_final())
     4) As a convenience, provide a hexdigest() method
+- setup.py should auto-detect the platform that it is running on, i.e. it should
+  not be necessary to manually edit setup.py to make platform-specific changes
+  (autoconf?)
 
 
 Priority 3 (not important)
 -------------------------
 - Register with PyPI
+- Configure Pydev project so that the extension build and the subsequent unit
+  tests can be run from within Eclipse
+- Configure Pydev project so that the built extension (src/packages/aprmd5.so)
+  is added to the project's PYTHONPATH and the unit test modules no longer
+  appear with unresolved imports within Eclipse

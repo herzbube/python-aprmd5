@@ -37,10 +37,12 @@
 // included.
 #include <Python.h>
 
-// Depends on the version of libaprutil that we are using
-#include <apr-0/apr_md5.h>        // seen on Mac OS X (provided by fink)
-// #include <apr-1.0/apr_md5.h>   // seen on a Debian system
-// #include <apr-1/apr_md5.h>     // seen on Mac OS X (system)
+// The filename of the header that we include depends on the version of
+// libaprutil that we want to use, and the platform we are on. We want this C
+// source file to remain independent, so we use a preprocessor macro and
+// delegate responsibility for defining the macro to the build process. The
+// usual place where the macro is defined is setup.py.
+#include APR_MD5_HEADER_FILENAME
 
 // TODO: This global variable is used to keep the state between function calls
 // of apr_md5_init(), apr_md5_update() and apr_md5_final(). Very ugly, should be
@@ -84,7 +86,9 @@ void aprmd5_helper_bindigest_to_hexdigest(const unsigned char* binDigest, char* 
 
 // ---------------------------------------------------------------------------
 // This is the wrapper for the function apr_md5_encode(), included from
-// apr_md5.h. This wrapper will be available as aprmd5.md5_encode().
+// apr_md5.h. From within Python, this wrapper will be available as
+//
+//   aprmd5.md5_encode()
 //
 // Generates a salted crypt-style hash. For input "foo" and salt "mYJd83wW",
 // the result is this: "$apr1$mYJd83wW$IO.6aK3G0d4mHxcImhPX50".
@@ -140,8 +144,10 @@ aprmd5_md5_encode(PyObject* self, PyObject* args)
 
 // ---------------------------------------------------------------------------
 // This is the wrapper for the function apr_password_validate(), included from
-// apr_md5.h. This wrapper will be available as aprmd5.password_validate().
-///
+// apr_md5.h. From within Python, this wrapper will be available as
+//
+//   aprmd5.password_validate()
+//
 // Parameters of the Python function:
 // - password: a string object that contains the password in clear text to be
 //   validated
@@ -183,14 +189,16 @@ aprmd5_password_validate(PyObject* self, PyObject* args)
 
 // ---------------------------------------------------------------------------
 // This is the wrapper for the function apr_md5(), included from apr_md5.h.
-// This wrapper will be available as aprmd5.md5().
+// From within Python, this wrapper will be available as
+//
+//   aprmd5.md5()
 //
 // Generates a hash using the original, unmodified MD5 algorithm. For input
 // "foo", the result is this: "acbd18db4cc2f85cedef654fccc4a4d8".
 //
 // Parameters of the Python function:
-// - input: a string (Python 2.6) or bytes (Python 3.x) object that contains
-//   the message that a digest should be generated for
+// - input: a string (Python 2.6 and earlier) or bytes (Python 3) object that
+//   contains the message that a digest should be generated for
 //
 // Return value of the Python function:
 // - The MD5 hash, in hexadecimal form, that was generated from input. Note:
@@ -247,7 +255,9 @@ aprmd5_md5(PyObject* self, PyObject* args)
 
 // ---------------------------------------------------------------------------
 // This is the wrapper for the function apr_md5_init(), included from
-// apr_md5.h. This wrapper will be available as aprmd5.md5_init().
+// apr_md5.h. From within Python, this wrapper will be available as
+//
+//   aprmd5.md5_init()
 //
 // Initiates a new MD5 operation. This function is intended to be used in
 // conjunction with md5_update() and md5_final(). When this function is called,
@@ -277,7 +287,9 @@ aprmd5_md5_init(PyObject* self, PyObject* args)
 
 // ---------------------------------------------------------------------------
 // This is the wrapper for the function apr_md5_update(), included from
-// apr_md5.h. This wrapper will be available as aprmd5.md5_update().
+// apr_md5.h. From within Python, this wrapper will be available as
+//
+//   aprmd5.md5_update()
 //
 // Adds input to an MD5 operation that has previously been initiated with
 // md5_init(). This function can be called repeatedly to incrementally add more
@@ -285,8 +297,8 @@ aprmd5_md5_init(PyObject* self, PyObject* args)
 // be called to retrieve the MD5 digest.
 //
 // Parameters of the Python function:
-// - input: a string (Python 2.6) or bytes (Python 3.x) object that contains
-//   part of the message that a digest should be generated for
+// - input: a string (Python 2.6 and earlier) or bytes (Python 3) object that
+//   contains part of the message that a digest should be generated for
 //
 // Return value of the Python function:
 // - None
@@ -335,7 +347,9 @@ aprmd5_md5_update(PyObject* self, PyObject* args)
 
 // ---------------------------------------------------------------------------
 // This is the wrapper for the function apr_md5_final(), included from
-// apr_md5.h. This wrapper will be available as aprmd5.md5_final().
+// apr_md5.h. From within Python, this wrapper will be available as
+//
+//   aprmd5.md5_final()
 //
 // Concludes an MD5 operation that has previously been initiated with md5_init()
 // and for which input has previously been added with md5_update(). This

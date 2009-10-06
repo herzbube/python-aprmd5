@@ -1,7 +1,6 @@
 recursive-include doc *
-recursive-include src/packages/tests *
-include src/scripts/mkroesti-test
+recursive-include src *
 exclude doc/ReleaseSteps
-exclude doc/DESIGN
 global-exclude .DS_Store
 global-exclude *.pyc
+global-exclude *.so

@@ -76,9 +76,11 @@ To switch between the two major versions 0.x and 1.x xxx
 
 Python versions
 ---------------
-The minimum requirement for running a current version of python-aprmd5 is
-Python 2.6 (tests were made with Python 2.6.2). It should also run fine with
-Python 3.
+The minimum requirement for building and running a current version of
+python-aprmd5 is Python 2.5 (tests were made with Python 2.5.1 on Mac OS X).
+Earlier versions of Python might work as well, but this has never been tested.
+
+It should also be fine to build/run python-aprmd5 with Python 3.
 
 
 Limitations

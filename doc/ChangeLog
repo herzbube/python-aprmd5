@@ -1,3 +1,11 @@
+Tue Oct 06 2009   "Patrick Näf" <herzbube@herzbube.ch>
+- [tests] added "test" command to setup.py
+- [tests] added unit test modules with dummy implementations
+- [internal] added build configurations for a couple of different platforms to
+  setup.py
+- [internal] changed project folder structure (added doc and src folders)
+- [internal] extension is now built by default into src/packages/aprmd5.so
+
 Sat Jun 20 2009   "Patrick Näf" <herzbube@herzbube.ch>
 - rewrite of project description in README + setup.py
 

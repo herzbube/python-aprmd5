@@ -1,0 +1,43 @@
+Purpose of this document
+------------------------
+This document is a simple container for some notes related to my experiences
+with developing my first Python extension.
+
+
+The mythical "Setup file"
+-------------------------
+In the official Python docs, the document "Installing Python Modules" contains
+a section titled "Tweaking compiler/linker flags" which talks about a so-called
+"Setup file". This file supposedly allows to list extension modules to be built,
+including any extra compiler and linker flags.
+
+Nowhere in the docs does it specify how this file actually should be named, nor
+how it is to be incorporated into the module build done by setup.py. Looking at
+the markup of the document, one might get the vague notion that the file should
+be called "Setup", but this is not true.
+
+Googling does not really help. Digging in the distutils sources finally reveals
+a function read_setup_file() inside the file extension.py that is intended to
+handle this mythical "Setup file". Another search for invocations of that
+function reveals - nothing! The only place that the function is called from is
+a unit test inside distutils.
+
+Googling for read_setup_file() again does not help much. Issue 6145 (May 2009,
+http://bugs.python.org/issue6145) talks about the function, but says nothing
+about how it is used (ironically, the developer whom the issue is assigned to
+states that he needs to "look at how read_setup_file is actually used in the
+community [...]". Finally, on some obscure project page on the web, I found a
+usage example for the function - it appears that one must call the function
+*manually* from within setup.py:
+
+  extensions = read_setup_file('Setup')
+
+Aha. Why didn't the Python docs say so? A pity, because the docs are otherwise
+pretty good and not as obfuscated and lacking as in this case.
+
+Having finally found out how this is supposed to work, and looking at how the
+read_setup_file() function is implemented, I must say that this is probably not
+the most terrific feature of the distutils package. Everything that the function
+does can also be accomplished from within setup.py, when creating an instance of
+distutils.Extension(). IMHO the only advantage of this "Setup file" is when you
+are *really* desperate to keep compiler/linker flags out of setup.py.

@@ -1,0 +1,8 @@
+#Tue Oct 06 15:37:40 CEST 2009
+eclipse.preferences.version=1
+encoding//src/packages/tests/__init__.py=utf-8
+encoding//src/packages/tests/test_md5.py=utf-8
+encoding//src/packages/tests/test_md5_encode.py=utf-8
+encoding//src/packages/tests/test_md5_operation.py=utf-8
+encoding//src/packages/tests/test_password_validate.py=utf-8
+encoding/setup.py=utf-8

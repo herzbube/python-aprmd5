@@ -45,4 +45,20 @@ using the Distutils Python module. In the terminology of Distutils, the tar
 ball is a so-called "source distribution" intended to be converted by a packager
 into a so-called "built distribution" (e.g. an RPM or Debian package).
 
-If you are a packager, bla bla bla
+If you are a packager, bla bla bla (fix setup.py so that it matches the platform
+it is run on)
+
+./setup.py build_ext
+-> builds extension into src/packages/aprmd5.so
+-> because of setup.cfg
+-> is equivalent to the command
+     ./setup.py build_ext --build-lib src/packages
+-> for gcc, include and/or library directories can also be added by setting
+   the environment variables CPATH and/or LIBRARY_PATH. For instance:
+     CPATH=/sw/include LIBRARY_PATH=/sw/lib ./setup.py build_ext
+
+./setup.py test
+
+Manual tests:
+  PYTHONPATH=src/packages python
+
