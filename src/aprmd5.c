@@ -354,8 +354,11 @@ aprmd5_md5_update(PyObject* self, PyObject* args)
 // Concludes an MD5 operation that has previously been initiated with md5_init()
 // and for which input has previously been added with md5_update(). This
 // function needs to be called to retrieve the result, i.e. the digest, of the
-// entire MD5 operation. md5_init() must be called after this function to
-// initiate a new MD5 operation.
+// entire MD5 operation.
+//
+// Note: md5_init() must be called after this function to initiate a new
+// MD5 operation. The result of calling md5_update() or md5_final() again,
+// without first calling md5_init(), is undefined!
 //
 // Parameters of the Python function:
 // - None

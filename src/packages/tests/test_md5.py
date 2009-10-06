@@ -25,13 +25,35 @@ import unittest
 
 # python-aprmd5
 from aprmd5 import md5
+import tests   # import stuff from __init__.py (e.g. tests.python2)
 
 
 class MD5Test(unittest.TestCase):
     """Exercise aprmd5.md5()"""
 
-    def testDummy(self):
-        pass
+    def testNormal(self):
+        if tests.python2:
+            input = "foo"
+        else:
+            # Convert into bytes. We can use UTF-8 because we know that this
+            # file, and therefore the literal "foo", is UTF-8 encoded.
+            input = "foo".encode("utf-8")
+        expectedResult = "acbd18db4cc2f85cedef654fccc4a4d8"
+        result = md5(input)
+        self.assertEqual(result, expectedResult)
+
+    def testInputIsEmpty(self):
+        if tests.python2:
+            input = ""
+        else:
+            input = bytes()
+        expectedResult = "d41d8cd98f00b204e9800998ecf8427e"
+        result = md5(input)
+        self.assertEqual(result, expectedResult)
+
+    def testInputIsNone(self):
+        input = None
+        self.assertRaises(TypeError, md5, input)
 
 
 if __name__ == "__main__":

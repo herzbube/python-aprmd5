@@ -20,12 +20,19 @@
 
 # PSL
 import unittest
+import sys
 
 # python-aprmd5
 from tests import test_md5_encode
 from tests import test_md5_operation
 from tests import test_md5
 from tests import test_password_validate
+
+
+# Set python2 to True or False, depending on which version of the
+# interpreter we are running
+(major, minor, micro, releaselevel, serial) = sys.version_info
+python2 = (major == 2)
 
 
 def allTests():

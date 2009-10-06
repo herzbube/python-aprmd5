@@ -10,7 +10,6 @@ the Roadmap document.
 
 Release blockers
 ----------------
-- Add unit tests
 - Determine license to use (GPL v3 or LGPL)
 - Check out project structure of python-mhash
 - Finish writing INSTALL (section "packager information")
@@ -38,6 +37,17 @@ Priority 2 (nice to have)
 - setup.py should auto-detect the platform that it is running on, i.e. it should
   not be necessary to manually edit setup.py to make platform-specific changes
   (autoconf?)
+- The result of invoking apr_md5_final() a second time, without having invoked
+  apr_md5_init() before, is not defined. The current implementation silently
+  produces an undefined result, but it should be changed to spit out an error,
+  instead. The documentation of the function in libaprutil says this:
+  "Ends an MD5 message-digest operation, writing the message digest and zeroing
+  the context". So maybe in implementing this TODO, the context could be checked
+  for zeroes? Notes
+  - If this TODO is implemented, a test in test_md5_operation.py needs to be
+    updated.
+  - This TODO is probably moot as soon as the change to work with an md5 object
+    is implemented.
 
 
 Priority 3 (not important)

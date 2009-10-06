@@ -30,8 +30,113 @@ from aprmd5 import password_validate
 class PasswordValidateTest(unittest.TestCase):
     """Exercise aprmd5.password_validate()"""
 
-    def testDummy(self):
-        pass
+    def testValidationSucceeds(self):
+        password = "foo"
+        hash = "$apr1$mYJd83wW$IO.6aK3G0d4mHxcImhPX50"
+        expectedResult = True
+        result = password_validate(password, hash)
+        self.assertEqual(result, expectedResult)
+
+    def testValidationFails(self):
+        password = "foo"
+        hash = "$apr1$mYJd83wW$xxxxxxxxxxxxxxxxxxxxxx"
+        expectedResult = False
+        result = password_validate(password, hash)
+        self.assertEqual(result, expectedResult)
+
+    def testPasswordIsEmptyString(self):
+        password = ""
+        hash = "$apr1$7n4Iu7Bq$jsH1cRc.tyRPvJpZjxUjV."
+        expectedResult = True
+        result = password_validate(password, hash)
+        self.assertEqual(result, expectedResult)
+
+    def testPasswordIsNone(self):
+        password = None
+        hash = "7n4Iu7Bq"
+        self.assertRaises(TypeError, password_validate, password, hash)
+
+    def testHashHasWrongPrefix(self):
+        password = "foo"
+        hash = "$apr2$mYJd83wW$IO.6aK3G0d4mHxcImhPX50"
+        expectedResult = False
+        result = password_validate(password, hash)
+        self.assertEqual(result, expectedResult)
+
+    def testHashHasEmptyPrefix(self):
+        password = "foo"
+        hash = "$$mYJd83wW$IO.6aK3G0d4mHxcImhPX50"
+        expectedResult = False
+        result = password_validate(password, hash)
+        self.assertEqual(result, expectedResult)
+
+    def testHashHasNoPrefix(self):
+        password = "foo"
+        hash = "mYJd83wW$IO.6aK3G0d4mHxcImhPX50"
+        expectedResult = False
+        result = password_validate(password, hash)
+        self.assertEqual(result, expectedResult)
+
+    def testHashHasTooLongPrefix(self):
+        password = "foo"
+        hash = "$apr1234567890$mYJd83wW$IO.6aK3G0d4mHxcImhPX50"
+        expectedResult = False
+        result = password_validate(password, hash)
+        self.assertEqual(result, expectedResult)
+
+    def testHashHasEmptySalt(self):
+        password = "foo"
+        hash = "$apr1$$vGRl2mLvDG8pptkZ9Cyum."
+        expectedResult = True
+        result = password_validate(password, hash)
+        self.assertEqual(result, expectedResult)
+
+    def testHashHasNoSalt(self):
+        password = "foo"
+        hash = "$apr1$vGRl2mLvDG8pptkZ9Cyum."
+        expectedResult = False
+        result = password_validate(password, hash)
+        self.assertEqual(result, expectedResult)
+
+    def testHashHasTooLongSalt(self):
+        password = "foo"
+        hash = "$apr1$mYJd83wW9876543210$IO.6aK3G0d4mHxcImhPX50"
+        expectedResult = False
+        result = password_validate(password, hash)
+        self.assertEqual(result, expectedResult)
+
+    def testHashHasEmptyCrypt(self):
+        password = "foo"
+        hash = "$apr1$mYJd83wW$"
+        expectedResult = False
+        result = password_validate(password, hash)
+        self.assertEqual(result, expectedResult)
+
+    def testHashHasNoCrypt(self):
+        password = "foo"
+        hash = "$apr1$mYJd83wW"
+        expectedResult = False
+        result = password_validate(password, hash)
+        self.assertEqual(result, expectedResult)
+
+    def testHashHasTooLongCrypt(self):
+        password = "foo"
+        hash = "$apr1$mYJd83wW$IO.6aK3G0d4mHxcImhPX501234567890"
+        expectedResult = False
+        result = password_validate(password, hash)
+        self.assertEqual(result, expectedResult)
+
+    def testHashIsEmptyString(self):
+        password = "foo"
+        hash = ""
+        expectedResult = False
+        result = password_validate(password, hash)
+        self.assertEqual(result, expectedResult)
+
+    def testHashIsNone(self):
+        password = "foo"
+        hash = None
+        self.assertRaises(TypeError, password_validate, password, hash)
 
 
 if __name__ == "__main__":
