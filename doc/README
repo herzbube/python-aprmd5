@@ -69,21 +69,42 @@ libaprutil versions
 No formal tests for compatibility with certain versions of libaprutil have been
 performed. The earliest version that I have casually used on my system at home
 (a Mac OS X box) is libaprutil 0.9. Another version that I have used for casual
-testing on a Debian virtual box is libaprutil 1.3.5.
+testing on a Debian virtual box is libaprutil 1.3.5. As the interface of the
+MD5 routines has not changed for a long time, and even across major versions of
+libaprutil, it is reasonable to expect that python-aprmd5 will work with pretty
+much all versions of libaprutil.
 
-To switch between the two major versions 0.x and 1.x xxx
+See the INSTALL document for details on how to build python-aprmd5 against
+different versions of libaprutil.
 
 
 Python versions
 ---------------
-The minimum requirement for building and running a current version of
-python-aprmd5 is Python 2.5 (tests were made with Python 2.5.1 on Mac OS X).
-Earlier versions of Python might work as well, but this has never been tested.
-
-It should also be fine to build/run python-aprmd5 with Python 3.
+python-aprmd5 implements both the 2.x and the 3.x versions of Python's C-API,
+so in theory it should work with all versions of Python 2.x and 3.x. In
+practice, no formal tests have been performed to verify this statement. The
+earliest version of Python that I have used to build python-aprmd5 with has been
+2.5.1, and the latest version has been 3.1.1 (both on Mac OS X 10.5).
 
 
 Limitations
 -----------
 python-aprmd5's treatment of libaprutil's MD5 routines other than the function
 apr_md5_encode() is rather cursory.
+
+
+How to test python-aprmd5
+-------------------------
+After performing a default build of python-aprmd5, the following command runs
+all automated tests from the command line, from within the git working tree:
+
+  ./setup.py test
+
+To run tests from only one module (test_md5_encode.py in this example):
+
+  setup.py test --suite=tests.test_md5_encode
+
+To run the tests with a specific version of Python (version 2.6 in this example,
+installed in /usr/bin such as on a Debian system):
+
+  /usr/bin/python2.6 setup.py test

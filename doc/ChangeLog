@@ -1,4 +1,5 @@
 Tue Oct 07 2009   "Patrick Näf" <herzbube@herzbube.ch>
+- [doc] finished writing documents README, INSTALL and ReleaseSteps
 - [doc] added Roadmap document
 - [tests] implemented unit tests
 

@@ -2,3 +2,6 @@
 build/
 *.so
 *.pyc
+# Source distribution products
+MANIFEST
+dist/

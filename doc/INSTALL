@@ -45,20 +45,93 @@ using the Distutils Python module. In the terminology of Distutils, the tar
 ball is a so-called "source distribution" intended to be converted by a packager
 into a so-called "built distribution" (e.g. an RPM or Debian package).
 
-If you are a packager, bla bla bla (fix setup.py so that it matches the platform
-it is run on)
+If you are a packager, the next two sections give you an overview of the source
+distribution's directory structure and the content of each directory. The final
+section provides details about the changes that are necessary to make
+python-aprmd5 work on different platforms with different versions of libaprutil.
 
-./setup.py build_ext
--> builds extension into src/packages/aprmd5.so
--> because of setup.cfg
--> is equivalent to the command
-     ./setup.py build_ext --build-lib src/packages
--> for gcc, include and/or library directories can also be added by setting
-   the environment variables CPATH and/or LIBRARY_PATH. For instance:
-     CPATH=/sw/include LIBRARY_PATH=/sw/lib ./setup.py build_ext
 
-./setup.py test
+Directory structure
+-------------------
+The directory structure inside the source distribution tar ball looks like
+this:
 
-Manual tests:
-  PYTHONPATH=src/packages python
+root
++-- src
+|   +-- packages
+|   |   +-- tests
+|   +-- aprmd5.c
++-- doc
 
+
+Content description
+-------------------
+src/aprmd5.c
+- the single C source file of the project
+
+src/packages
+- a standard build of python-aprmd5 places the built extension aprmd5.so into
+  this folder; from there, the built extension will go into the built
+  distribution
+- the built extension's final destination is somewhere within the PYTHONPATH
+  (e.g. /usr/lib/python2.5 on a Debian system)
+
+src/packages/tests
+- contains automated tests that can be run, after performing a standard build
+  of python-aprmd5, from the root folder using
+    python setup.py test
+- the test files are not intended to go into the built distribution, although
+  you may certainly include them if you wish to do so
+
+doc
+- contains documentation files such as this INSTALL document
+- some of these files should probably go into the built distribution (e.g.
+  README, LICENSE), whereas others are of minor interest and can be omitted
+  (e.g. Roadmap, TODO)
+
+
+How to build the project
+------------------------
+Before attempting to build the project, the file setup.py must be edited and a
+few things changed so that the build matches your system uses the correct
+version of libaprutil. Hopefully, in a future version of python-aprmd5 this
+manual editing will be replaced by auto-detection of the build system type and
+the version of libaprutil that is installed on the system.
+
+For now, however, the following variable assignments in setup.py need to be
+reviewed, and changed (or commented out) if necessary to make the build work:
+
+  aprmd5_header_filename
+  aprmd5_library_filename
+  include_dirs
+  library_dirs
+  extra_compile_args
+  extra_link_args
+
+Once setup.py has been edited to your satisfaction, a standard build of
+python-aprmd5, using the default Python interpreter, may be performed with the
+following command:
+
+  ./setup.py build_ext
+
+If the build succeeds, you can find the built extension in this location:
+
+  src/packages/aprmd5.so
+
+This location is defined in the file setup.cfg. If required it can be changed,
+but then setup.py will no longer be able to run the project's unit tests. After
+a successful standard build, unit tests may be run with the following command:
+
+  ./setup.py test
+
+The following is an example how to build the project, or run unit tests, using
+a non-default Python interpreter:
+
+  /Library/Frameworks/Python.framework/Versions/3.1/bin/python3 setup.py build_ext
+  /sw/bin/python2.5 setup.py test
+
+Finally, the following example illustrates how to use environment variables to
+define additional include or library search paths for gcc, without having to
+modify setup.py:
+
+  CPATH=/sw/include LIBRARY_PATH=/sw/lib ./setup.py build_ext

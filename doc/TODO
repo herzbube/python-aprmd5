@@ -10,13 +10,9 @@ the Roadmap document.
 
 Release blockers
 ----------------
-- Determine license to use (GPL v3 or LGPL)
 - Check out project structure of python-mhash
-- Finish writing INSTALL (section "packager information")
-- Finish writing README; among other things, document how to switch between
-  major versions of libaprutil in the "libaprutil version" section
-- Finish writing ReleaseSteps
 - Test Debian build configuration
+- Add Website
 - Add Bugzilla issues for all relevant TODOs
 
 
