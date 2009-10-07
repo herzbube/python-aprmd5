@@ -139,6 +139,18 @@ setup(
       url="http://www.herzbube.ch/python-aprmd5",
       author="Patrick Näf",
       author_email="herzbube@herzbube.ch",
+      classifiers = [
+        "Programming Language :: Python",
+        "Programming Language :: Python :: 3",
+        "Programming Language :: C",
+        "Development Status :: 4 - Beta",
+        "Environment :: Other Environment",
+        "Intended Audience :: Developers",
+        "License :: OSI Approved :: GNU General Public License (GPL)",
+        "Operating System :: OS Independent",
+        "Topic :: Software Development :: Libraries :: Python Modules",
+        "Topic :: Security :: Cryptography",
+        ],
       description="Python interface to the MD5 routines of libaprutil",
       long_description=
 """
