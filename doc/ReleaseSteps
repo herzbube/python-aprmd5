@@ -18,16 +18,11 @@ Before the release
 - make sure that the copyright year is up to date in the following files:
   - aprmd5.c
   - *.py
-- run build and automated tests on development system (it is assumed that this
-  is a Mac OS X box), both for Python 2.x and Python 3.x, either in the IDE or
-  on the command line, by issuing the following commands:
-    cd <projectdir>
-    for VER in 2.6 3.1; do
-      rm -rf build src/packages/aprmd5.so
-      PYTHON_BIN=/Library/Frameworks/Python.framework/Versions/$VER/bin/python$VER
-      $PYTHON_BIN setup.py build_ext
-      $PYTHON_BIN setup.py test
-    done
+- run build and automated tests on development system, both for Python 2.x
+  and Python 3.x; do this either in the IDE or on the command line; if you are
+  on a Mac OS X box, the following helper script does all this automatically
+  for you:
+    ./build-and-test.sh
 - make the source distribution tar ball by issuing the following commands (check
   the command's output for suspicious warnings, although you can ignore warnings
   about missing README, .DS_Store and *.pyc files):

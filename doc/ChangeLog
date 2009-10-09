@@ -1,16 +1,20 @@
+Fri Oct 09 2009   "Patrick Näf" <herzbube@herzbube.ch>
+- [build] added release helper script build-and-test.sh
+- [doc] finished writing ReleaseSteps
+
 Tue Oct 07 2009   "Patrick Näf" <herzbube@herzbube.ch>
-- [internal] added classifiers to setup.py meta-data
+- [project] added classifiers to setup.py meta-data
 - [doc] finished writing documents README, INSTALL and ReleaseSteps
 - [doc] added Roadmap document
-- [tests] implemented unit tests
+- [test] implemented unit tests
 
 Tue Oct 06 2009   "Patrick Näf" <herzbube@herzbube.ch>
-- [tests] added "test" command to setup.py
-- [tests] added unit test modules with dummy implementations
-- [internal] added build configurations for a couple of different platforms to
+- [test] added "test" command to setup.py
+- [test] added unit test modules with dummy implementations
+- [build] added build configurations for a couple of different platforms to
   setup.py
-- [internal] changed project folder structure (added doc and src folders)
-- [internal] extension is now built by default into src/packages/aprmd5.so
+- [project] changed project folder structure (added doc and src folders)
+- [build] extension is now built by default into src/packages/aprmd5.so
 
 Sat Jun 20 2009   "Patrick Näf" <herzbube@herzbube.ch>
 - rewrite of project description in README + setup.py

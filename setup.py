@@ -124,7 +124,9 @@ class test(Command):
     def run(self):
         tests = unittest.defaultTestLoader.loadTestsFromName(self.suite)
         testRunner = unittest.TextTestRunner(verbosity = 1)
-        testRunner.run(tests)
+        testResult = testRunner.run(tests)
+        if not testResult.wasSuccessful():
+            sys.exit(1)
 
 
 setup(

@@ -2,6 +2,7 @@
 build/
 *.so
 *.pyc
+build-and-test.sh.log
 # Source distribution products
 MANIFEST
 dist/
