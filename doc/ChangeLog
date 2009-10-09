@@ -1,4 +1,5 @@
 Fri Oct 09 2009   "Patrick Näf" <herzbube@herzbube.ch>
+- [bugfix] Unit test fails on Debian (#72)
 - [build] added release helper script build-and-test.sh
 - [doc] finished writing ReleaseSteps
 
