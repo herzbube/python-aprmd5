@@ -137,7 +137,7 @@ setup(
       cmdclass = { "test" : test },
       # Meta-data
       name="python-aprmd5",
-      version="0.1",
+      version="0.2",
       url="http://www.herzbube.ch/python-aprmd5",
       author="Patrick Näf",
       author_email="herzbube@herzbube.ch",

@@ -39,7 +39,10 @@ Library module "hashlib".
 
 Release notes
 -------------
-This is python-aprmd5 0.1 (the initial release of the project).
+This is python-aprmd5 0.2.
+
+Changes in this release:
+- TODO
 
 For more details see the ChangeLog document.
 
