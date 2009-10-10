@@ -40,7 +40,6 @@ Priority 2 (nice to have)
 
 Priority 3 (not important)
 -------------------------
-- Register with PyPI
 - Configure Pydev project so that the extension build and the subsequent unit
   tests can be run from within Eclipse
 - Configure Pydev project so that the built extension (src/packages/aprmd5.so)
