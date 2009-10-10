@@ -34,10 +34,14 @@ Before the release
     tar xfvzo python-aprmd5-x.y.tar.gz
     cd python-aprmd5-x.y
     mv setup.cfg setup.cfg.bak
-    ./setup.py install --home=~
+    --- manually edit setup.py so that the project builds ---
+    for PYTHON_VER in 2.5 2.6 3.1; do
+      python$PYTHON_VER setup.py install --home=~/aprmd5-test
+      PYTHONPATH=~/aprmd5-test/lib/python python$PYTHON_VER setup.py test
+      rm -rf ../aprmd5-test
+    done
     cd ..
     rm -r python-aprmd5-x.y
-    PYTHONPATH=~/lib/python ./setup.py test
 - commit final changes (check with "git status" that nothing was forgotten)
 
 

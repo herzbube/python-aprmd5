@@ -1,5 +1,8 @@
+Sat Oct 10 2009   "Patrick Näf" <herzbube@herzbube.ch>
+- [doc] final doc changes for release of version 0.1
+
 Fri Oct 09 2009   "Patrick Näf" <herzbube@herzbube.ch>
-- [bugfix] Unit test fails on Debian (#72)
+- [bugfix] Unit test fails on Debian [#72]
 - [build] added release helper script build-and-test.sh
 - [doc] finished writing ReleaseSteps
 
