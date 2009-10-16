@@ -12,17 +12,17 @@ Table of Contents
 
 Introduction
 ------------
-The python-aprmd5 project provides the Python module "aprmd5", which in turn is
-an interface to the MD5 routines of the Apache Portable Runtime (APR) Utility
-Library (libaprutil).
+python-aprmd5 is a Python extension written in C that wraps the MD5 routines of
+the Apache Portable Runtime (APR) Utility Library (libaprutil) and exposes them
+to the Python interpreter as the module aprmd5. The main purpose of writing
+python-aprmd5 in the first place has been to expose the function
+apr_md5_encode(), which generates salted crypt-style hashes using a version of
+the MD5 hash algorithm that was modified especially for the APR project.
 
-The main purpose of python-aprmd5 is to expose a single function,
-apr_md5_encode(), from among libaprutil's MD5 routines. That function is used to
-generate salted crypt-style hashes using a version of the MD5 hash algorithm
-that was modified for Apache. The resulting hashes always start with the prefix
-characters "$apr1$" in order to distinguish them from the result of various
-other crypt() variants, which use other prefixes. For instance, for input "foo"
-and salt "mYJd83wW", apr_md5_encode() produces the following hash:
+The resulting hashes always start with the prefix characters "$apr1$" in order
+to distinguish them from the result of various other crypt() variants, which
+use other prefixes. For instance, for input "foo" and salt "mYJd83wW",
+apr_md5_encode() produces the following hash:
 
   $apr1$mYJd83wW$IO.6aK3G0d4mHxcImhPX50
 
