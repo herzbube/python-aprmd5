@@ -1,4 +1,5 @@
 Sat Oct 17 2009   "Patrick Näf" <herzbube@herzbube.ch>
+- [project] implementation uses several files for better readability
 - [feature] provide md5 object (preliminary but working version)
 
 Tue Oct 13 2009   "Patrick Näf" <herzbube@herzbube.ch>
