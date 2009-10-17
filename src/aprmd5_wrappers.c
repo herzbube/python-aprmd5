@@ -23,6 +23,8 @@
 //
 // Note: The following MD5 routines are omitted/not exposed:
 // - apr_md5_set_xlate()
+// - apr_md5()
+// - apr_md5_init(), apr_md5_update() and apr_md5_final()
 // ---------------------------------------------------------------------------
 
 
@@ -30,13 +32,6 @@
 #include "aprmd5.h"
 #include "aprmd5_wrappers.h"
 #include "aprmd5_helpers.h"
-
-
-// TODO: This global variable is used to keep the state between function calls
-// of apr_md5_init(), apr_md5_update() and apr_md5_final(). Very ugly, should be
-// improved so that the aprmd5 module returns md5 objects that encapsulate this
-// state.
-static apr_md5_ctx_t aprmd5_module_context;
 
 
 // ---------------------------------------------------------------------------
@@ -143,205 +138,18 @@ aprmd5_password_validate(PyObject* self, PyObject* args)
 
 
 // ---------------------------------------------------------------------------
-// This is the wrapper for the function apr_md5(), included from apr_md5.h.
-// From within Python, this wrapper will be available as
-//
-//   aprmd5.md5()
-//
-// Generates a hash using the original, unmodified MD5 algorithm. For input
-// "foo", the result is this: "acbd18db4cc2f85cedef654fccc4a4d8".
-//
-// Parameters of the Python function:
-// - input: a string (Python 2.6 and earlier) or bytes (Python 3) object that
-//   contains the message that a digest should be generated for
-//
-// Return value of the Python function:
-// - The MD5 hash, in hexadecimal form, that was generated from input. Note:
-//   The original libaprutil function apr_md5() returns a binary digest, not a
-//   hexadecimal digest.
+// The method table: List methods in this module.
 // ---------------------------------------------------------------------------
-PyObject*
-aprmd5_md5(PyObject* self, PyObject* args)
+PyMethodDef aprmd5_methods[] =
 {
-  // TODO: We do this sizeof() check because later on, when we call apr_md5(),
-  // we are making an implicit type conversion from Py_ssize_t (inputLen) to
-  // apr_size_t (function argument type). Instead of aborting here, a better
-  // approach would probably be to iterate over the input buffer and use the
-  // apr-util functions apr_md5_init(), apr_md5_update() and apr_md5_final().
-  assert(sizeof(apr_size_t) >= sizeof(Py_ssize_t));
-  if (sizeof(apr_size_t) < sizeof(Py_ssize_t))
   {
-    PyErr_SetString(PyExc_RuntimeError, "Function aborted, sizeof(apr_size_t) < sizeof(Py_ssize_t)");
-    return NULL;
-  }
-
-#if PY_MAJOR_VERSION >= 3
-  // Input must be a bytes() object from which we can get a char*
-  const char* format = "y#";
-#else
-  // Input must be a str() object from which we can get a char*. The string may
-  // contain null bytes.
-  const char* format = "s#";
-#endif
-  const char* input;
-  Py_ssize_t inputLen;
-  if (! PyArg_ParseTuple(args, format, &input, &inputLen))
-    return NULL;
-
-  // Generate the hash
-  unsigned char digest[APR_MD5_DIGESTSIZE];
-  apr_status_t status = apr_md5(digest, input, inputLen);
-  if (APR_SUCCESS != status)
+    "md5_encode", aprmd5_md5_encode, METH_VARARGS,
+    "Encode a password using an MD5 algorithm modified for Apache."
+  },
   {
-    PyErr_SetString(PyExc_RuntimeError, "apr_md5() returned status code != 0");
-    return NULL;
-  }
+    "password_validate", aprmd5_password_validate, METH_VARARGS,
+    "Validate any password encypted with any algorithm that APR understands."
+  },
+  {NULL, NULL, 0, NULL}   // Sentinel
+};
 
-  // Construct the hex digest from the binary digest
-  Py_ssize_t hexDigestLen = APR_MD5_DIGESTSIZE * 2;
-  char hexDigest[hexDigestLen];
-  aprmd5_helper_bindigest_to_hexdigest(APRMD5_MD5_DIGESTSIZE, digest, hexDigest);
-
-  // Return the result; the Python system becomes responsible for the object
-  // returned by Py_BuildValue().
-  return Py_BuildValue("s#", hexDigest, hexDigestLen);
-}
-
-
-// ---------------------------------------------------------------------------
-// This is the wrapper for the function apr_md5_init(), included from
-// apr_md5.h. From within Python, this wrapper will be available as
-//
-//   aprmd5.md5_init()
-//
-// Initiates a new MD5 operation. This function is intended to be used in
-// conjunction with md5_update() and md5_final(). When this function is called,
-// any input that has been passed into md5_update() is discarded.
-//
-// Parameters of the Python function:
-// - None
-//
-// Return value of the Python function:
-// - None
-// ---------------------------------------------------------------------------
-PyObject*
-aprmd5_md5_init(PyObject* self, PyObject* args)
-{
-  apr_status_t status = apr_md5_init(&aprmd5_module_context);
-  if (APR_SUCCESS != status)
-  {
-    PyErr_SetString(PyExc_RuntimeError, "apr_md5_init() returned status code != 0");
-    return NULL;
-  }
-
-  // Don't return NULL, as this would indicate an error
-  Py_INCREF(Py_None);
-  return Py_None;
-}
-
-
-// ---------------------------------------------------------------------------
-// This is the wrapper for the function apr_md5_update(), included from
-// apr_md5.h. From within Python, this wrapper will be available as
-//
-//   aprmd5.md5_update()
-//
-// Adds input to an MD5 operation that has previously been initiated with
-// md5_init(). This function can be called repeatedly to incrementally add more
-// input to the MD5 operation. When all input has been added, md5_final() can
-// be called to retrieve the MD5 digest.
-//
-// Parameters of the Python function:
-// - input: a string (Python 2.6 and earlier) or bytes (Python 3) object that
-//   contains part of the message that a digest should be generated for
-//
-// Return value of the Python function:
-// - None
-// ---------------------------------------------------------------------------
-PyObject*
-aprmd5_md5_update(PyObject* self, PyObject* args)
-{
-  // TODO: We do this sizeof() check because later on, when we call
-  // apr_md5_update(), we are making an implicit type conversion from Py_ssize_t
-  // (inputLen) to apr_size_t (function argument type). Instead of aborting
-  // here, a better approach would probably be to iterate over the input buffer
-  // and call apr_md5_update() multiple times
-  assert(sizeof(apr_size_t) >= sizeof(Py_ssize_t));
-  if (sizeof(apr_size_t) < sizeof(Py_ssize_t))
-  {
-    PyErr_SetString(PyExc_RuntimeError, "Function aborted, sizeof(apr_size_t) < sizeof(Py_ssize_t)");
-    return NULL;
-  }
-
-#if PY_MAJOR_VERSION >= 3
-  // Input must be a bytes() object from which we can get a char*
-  const char* format = "y#";
-#else
-  // Input must be a str() object from which we can get a char*. The string may
-  // contain null bytes.
-  const char* format = "s#";
-#endif
-  const char* input;
-  Py_ssize_t inputLen;
-  if (! PyArg_ParseTuple(args, format, &input, &inputLen))
-    return NULL;
-
-  // Feed the input into the MD5 algorithm
-  apr_status_t status = apr_md5_update(&aprmd5_module_context, input, inputLen);
-  if (APR_SUCCESS != status)
-  {
-    PyErr_SetString(PyExc_RuntimeError, "apr_md5_update() returned status code != 0");
-    return NULL;
-  }
-
-  // Don't return NULL, as this would indicate an error
-  Py_INCREF(Py_None);
-  return Py_None;
-}
-
-
-// ---------------------------------------------------------------------------
-// This is the wrapper for the function apr_md5_final(), included from
-// apr_md5.h. From within Python, this wrapper will be available as
-//
-//   aprmd5.md5_final()
-//
-// Concludes an MD5 operation that has previously been initiated with md5_init()
-// and for which input has previously been added with md5_update(). This
-// function needs to be called to retrieve the result, i.e. the digest, of the
-// entire MD5 operation.
-//
-// Note: md5_init() must be called after this function to initiate a new
-// MD5 operation. The result of calling md5_update() or md5_final() again,
-// without first calling md5_init(), is undefined!
-//
-// Parameters of the Python function:
-// - None
-//
-// Return value of the Python function:
-// - The MD5 hash, in hexadecimal form, that was generated from all the input
-//   fed into the MD5 operation by previous calls to md5_update(). Note: The
-//   original libaprutil function apr_md5_final() returns a binary digest, not a
-//   hexadecimal digest.
-// ---------------------------------------------------------------------------
-PyObject*
-aprmd5_md5_final(PyObject* self, PyObject* args)
-{
-  // Generate the hash
-  unsigned char digest[APR_MD5_DIGESTSIZE];
-  apr_status_t status = apr_md5_final(digest, &aprmd5_module_context);
-  if (APR_SUCCESS != status)
-  {
-    PyErr_SetString(PyExc_RuntimeError, "apr_md5_init() returned status code != 0");
-    return NULL;
-  }
-
-  // Construct the hex digest from the binary digest
-  Py_ssize_t hexDigestLen = APR_MD5_DIGESTSIZE * 2;
-  char hexDigest[hexDigestLen];
-  aprmd5_helper_bindigest_to_hexdigest(APRMD5_MD5_DIGESTSIZE, digest, hexDigest);
-
-  // Return the result; the Python system becomes responsible for the object
-  // returned by Py_BuildValue().
-  return Py_BuildValue("s#", hexDigest, hexDigestLen);
-}

@@ -27,24 +27,13 @@
 #ifndef APRMD5_WRAPPERS_H
 #define APRMD5_WRAPPERS_H
 
+extern PyMethodDef aprmd5_methods[];
 
 extern PyObject*
 aprmd5_md5_encode(PyObject* self, PyObject* args);
 
 extern PyObject*
 aprmd5_password_validate(PyObject* self, PyObject* args);
-
-extern PyObject*
-aprmd5_md5(PyObject* self, PyObject* args);
-
-extern PyObject*
-aprmd5_md5_init(PyObject* self, PyObject* args);
-
-extern PyObject*
-aprmd5_md5_update(PyObject* self, PyObject* args);
-
-extern PyObject*
-aprmd5_md5_final(PyObject* self, PyObject* args);
 
 
 #endif // #ifndef APRMD5_WRAPPERS_H

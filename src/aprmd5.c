@@ -30,39 +30,6 @@
 
 
 // ---------------------------------------------------------------------------
-// The method table: List methods in this module.
-// ---------------------------------------------------------------------------
-static PyMethodDef aprmd5_methods[] =
-{
-  {
-    "md5_encode", aprmd5_md5_encode, METH_VARARGS,
-    "Encode a password using an MD5 algorithm modified for Apache."
-  },
-  {
-    "password_validate", aprmd5_password_validate, METH_VARARGS,
-    "Validate any password encypted with any algorithm that APR understands."
-  },
-  {
-    "md5", aprmd5_md5, METH_VARARGS,
-    "Generate an MD5 hash in one step."
-  },
-  {
-    "md5_init", aprmd5_md5_init, METH_VARARGS,
-    "Begin an MD5 operation, writing a new context."
-  },
-  {
-    "md5_update", aprmd5_md5_update, METH_VARARGS,
-    "Continue an MD5 operation, processing another message block, and updating the context."
-  },
-  {
-    "md5_final", aprmd5_md5_final, METH_VARARGS,
-    "End an MD5 operation, generating the message digest and zeroing the context."
-  },
-  {NULL, NULL, 0, NULL}   // Sentinel
-};
-
-
-// ---------------------------------------------------------------------------
 // The module definition structure.
 // Note: This exists only for Py3k
 // ---------------------------------------------------------------------------

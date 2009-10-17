@@ -1,4 +1,5 @@
 Sat Oct 17 2009   "Patrick Näf" <herzbube@herzbube.ch>
+- [bugfix] replace wrappers related to original MD5 by md5 object [#70]
 - [bugfix] use explicit value APR_SUCCESS to check return status
 - [feature] md5.__init__() now has an optional initial input
 - [bugfix] md5.digest() now returns str object for Python 2.6 and earlier
