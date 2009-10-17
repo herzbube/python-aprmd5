@@ -35,13 +35,17 @@ class MD5Test(unittest.TestCase):
         if tests.python2:
             self.inputNormal = "foo"
             self.inputEmpty = ""
+            self.expectedDigestInputNormal = "\xac\xbd\x18\xdbL\xc2\xf8\\\xed\xefeO\xcc\xc4\xa4\xd8"
         else:
             # Convert into bytes. We can use UTF-8 because we know that this
             # file, and therefore the literal "foo", is UTF-8 encoded.
             self.inputNormal = "foo".encode("utf-8")
             self.inputEmpty = bytes()
+            # The b'' notation would be easier, but we can't use it: Python 2.5
+            # (and earlier) aborts if it sees b'' (even though it does not
+            # execute it) because of a syntax error.
+            self.expectedDigestInputNormal = bytes([172, 189, 24, 219, 76, 194, 248, 92, 237, 239, 101, 79, 204, 196, 164, 216])
         self.expectedHexdigestInputNormal = "acbd18db4cc2f85cedef654fccc4a4d8"
-        self.expectedDigestInputNormal = b'\xac\xbd\x18\xdbL\xc2\xf8\\\xed\xefeO\xcc\xc4\xa4\xd8'
         self.expectedHexdigestInputEmpty = "d41d8cd98f00b204e9800998ecf8427e"
         self.expectedHexdigestInputTwice = "fdba98970961edb29f88241b9d99d890"
 

@@ -229,7 +229,11 @@ aprmd5_md5_object_hexdigest(aprmd5_md5_object* self, PyObject* args)
 static PyObject*
 aprmd5_md5_object_copy(aprmd5_md5_object* self, PyObject* args)
 {
+#if PY_MAJOR_VERSION >= 3
   PyTypeObject* type = Py_TYPE(self);
+#else
+  PyTypeObject* type = self->ob_type;
+#endif
   if (type != &aprmd5_md5_type)
     return NULL;
   aprmd5_md5_object* newobj = (aprmd5_md5_object*)type->tp_alloc(type, 0);
@@ -259,7 +263,12 @@ aprmd5_md5_object_get_block_size(aprmd5_md5_object* self, void* closure)
 static PyObject *
 aprmd5_md5_object_get_name(aprmd5_md5_object* self, void* closure)
 {
+#if PY_MAJOR_VERSION >= 3
   return PyUnicode_FromStringAndSize(aprmd5_md5_type_name, strlen(aprmd5_md5_type_name));
+#else
+  return PyString_FromStringAndSize(aprmd5_md5_type_name, strlen(aprmd5_md5_type_name));
+#endif
+
 }
 
 
