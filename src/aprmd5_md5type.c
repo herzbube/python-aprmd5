@@ -202,15 +202,14 @@ aprmd5_md5_object_hexdigest(aprmd5_md5_object* self, PyObject* args)
 static PyObject*
 aprmd5_md5_object_copy(aprmd5_md5_object* self, PyObject* args)
 {
-  if (Py_TYPE(self) != &aprmd5_md5_type)
+  PyTypeObject* type = Py_TYPE(self);
+  if (type != &aprmd5_md5_type)
     return NULL;
-  aprmd5_md5_object* newobj = (aprmd5_md5_object*)PyObject_New(aprmd5_md5_object, &aprmd5_md5_type);
+  aprmd5_md5_object* newobj = (aprmd5_md5_object*)type->tp_alloc(type, 0);
   if (NULL == newobj)
     return NULL;
   newobj->context = self->context;
-  return (PyObject *)newobj;
-
-  return NULL;
+  return (PyObject*)newobj;
 }
 
 

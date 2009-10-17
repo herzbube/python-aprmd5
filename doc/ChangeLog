@@ -1,4 +1,5 @@
 Sat Oct 17 2009   "Patrick Näf" <herzbube@herzbube.ch>
+- [bugfix] md5.copy() and md5.__new__() now allocate md5 objects the same way
 - [bugfix] aprmd5.md5.__new__() now works properly
 - [project] implementation uses several files for better readability
 - [feature] provide md5 object (preliminary but working version)
