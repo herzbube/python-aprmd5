@@ -69,7 +69,7 @@ aprmd5_md5_object_new(PyTypeObject* type, PyObject* args, PyObject* kwds)
   if (NULL == self)
     return NULL;
   apr_status_t status = apr_md5_init(&self->context);
-  if (status)
+  if (APR_SUCCESS != status)
   {
     Py_DECREF(self);
     return NULL;
@@ -101,7 +101,7 @@ aprmd5_md5_object_init(aprmd5_md5_object* self, PyObject* args, PyObject* kwds)
   if (input != NULL)
   {
     apr_status_t status = apr_md5_update(&self->context, input, inputLen);
-    if (status)
+    if (APR_SUCCESS != status)
     {
       PyErr_SetString(PyExc_RuntimeError, "apr_md5_update() returned status code != 0");
       return -1;
@@ -160,7 +160,7 @@ aprmd5_md5_object_update(aprmd5_md5_object* self, PyObject* args)
 
   // Feed the input to the MD5 algorithm
   apr_status_t status = apr_md5_update(&self->context, input, inputLen);
-  if (status)
+  if (APR_SUCCESS != status)
   {
     PyErr_SetString(PyExc_RuntimeError, "apr_md5_update() returned status code != 0");
     return NULL;
@@ -181,7 +181,7 @@ aprmd5_md5_object_digest(aprmd5_md5_object* self, PyObject* args)
   // Generate the hash
   unsigned char digest[APRMD5_MD5_DIGESTSIZE];
   apr_status_t status = apr_md5_final(digest, &contextCopy);
-  if (status)
+  if (APR_SUCCESS != status)
   {
     PyErr_SetString(PyExc_RuntimeError, "apr_md5_final() returned status code != 0");
     return NULL;
@@ -210,7 +210,7 @@ aprmd5_md5_object_hexdigest(aprmd5_md5_object* self, PyObject* args)
   // Generate the hash
   unsigned char digest[APRMD5_MD5_DIGESTSIZE];
   apr_status_t status = apr_md5_final(digest, &contextCopy);
-  if (status)
+  if (APR_SUCCESS != status)
   {
     PyErr_SetString(PyExc_RuntimeError, "apr_md5_final() returned status code != 0");
     return NULL;

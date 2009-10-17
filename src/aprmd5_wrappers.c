@@ -85,7 +85,7 @@ aprmd5_md5_encode(PyObject* self, PyObject* args)
   // +1 to resultLen because, for some unknown reason, apr_md5_encode() wants
   // an additional byte
   apr_status_t status = apr_md5_encode(input, salt, result, resultLen + 1);
-  if (status)
+  if (APR_SUCCESS != status)
   {
     PyErr_SetString(PyExc_RuntimeError, "apr_md5_encode() returned status code != 0");
     return NULL;
@@ -135,7 +135,7 @@ aprmd5_password_validate(PyObject* self, PyObject* args)
   // string "O" and pass in one of the pre-fabricated values. Py_BuildValue will
   // increase the refcount for us.
   apr_status_t status = apr_password_validate(password, hash);
-  if (status)
+  if (APR_SUCCESS != status)
     return Py_BuildValue("O", Py_False);
   else
     return Py_BuildValue("O", Py_True);
@@ -191,7 +191,7 @@ aprmd5_md5(PyObject* self, PyObject* args)
   // Generate the hash
   unsigned char digest[APR_MD5_DIGESTSIZE];
   apr_status_t status = apr_md5(digest, input, inputLen);
-  if (status)
+  if (APR_SUCCESS != status)
   {
     PyErr_SetString(PyExc_RuntimeError, "apr_md5() returned status code != 0");
     return NULL;
@@ -228,7 +228,7 @@ PyObject*
 aprmd5_md5_init(PyObject* self, PyObject* args)
 {
   apr_status_t status = apr_md5_init(&aprmd5_module_context);
-  if (status)
+  if (APR_SUCCESS != status)
   {
     PyErr_SetString(PyExc_RuntimeError, "apr_md5_init() returned status code != 0");
     return NULL;
@@ -288,7 +288,7 @@ aprmd5_md5_update(PyObject* self, PyObject* args)
 
   // Feed the input into the MD5 algorithm
   apr_status_t status = apr_md5_update(&aprmd5_module_context, input, inputLen);
-  if (status)
+  if (APR_SUCCESS != status)
   {
     PyErr_SetString(PyExc_RuntimeError, "apr_md5_update() returned status code != 0");
     return NULL;
@@ -330,7 +330,7 @@ aprmd5_md5_final(PyObject* self, PyObject* args)
   // Generate the hash
   unsigned char digest[APR_MD5_DIGESTSIZE];
   apr_status_t status = apr_md5_final(digest, &aprmd5_module_context);
-  if (status)
+  if (APR_SUCCESS != status)
   {
     PyErr_SetString(PyExc_RuntimeError, "apr_md5_init() returned status code != 0");
     return NULL;
