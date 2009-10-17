@@ -54,7 +54,7 @@ typedef struct {
 
 
 // ---------------------------------------------------------------------------
-// Allocation/deallocation of md5 objects
+// Allocation/initialization/deallocation of md5 objects
 // ---------------------------------------------------------------------------
 
 // This function is responsible for creating objects *before* they are
@@ -64,7 +64,6 @@ typedef struct {
 static PyObject*
 aprmd5_md5_object_new(PyTypeObject* type, PyObject* args, PyObject* kwds)
 {
-  fprintf(stdout, "new called\n");
   aprmd5_md5_object* self = (aprmd5_md5_object*)type->tp_alloc(type, 0);
   if (self != NULL)
   {
@@ -85,27 +84,15 @@ aprmd5_md5_object_new(PyTypeObject* type, PyObject* args, PyObject* kwds)
 static int
 aprmd5_md5_object_init(aprmd5_md5_object* self, PyObject* args, PyObject* kwds)
 {
-  fprintf(stdout, "init called, context is %d, digest_size = %d, block_size = %d\n", self->context, APRMD5_MD5_DIGESTSIZE, APRMD5_MD5_BLOCKSIZE);
-
   // Make sure that no arguments have been passed
   static char* kwlist[] = {NULL};
   if (! PyArg_ParseTupleAndKeywords(args, kwds, "|", kwlist))
     return -1;
-  if (0 == 0)   // TODO xxx replace this by some useful check
-  {
-    // We should never get here. If we do, aprmd5_md5_object_new() has not
-    // been called!
-    assert(false);
-    apr_status_t status = apr_md5_init(&self->context);
-    if (status)
-    {
-      PyErr_SetString(PyExc_RuntimeError, "apr_md5_init() returned status code != 0");
-      return -1;
-    }
-  }
   return 0;
 }
 
+// This function is responsible for freeing memory and resources when objects
+// are destroyed.
 static void
 aprmd5_md5_object_dealloc(aprmd5_md5_object* self)
 {

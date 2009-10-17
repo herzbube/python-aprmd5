@@ -10,8 +10,6 @@ the Roadmap document.
 
 Release blockers
 ----------------
-- Remove debugging fprintf statements.
-- new() function must work
 - new() function should handle an optional initial string
 - Use aprutil status consts
 
