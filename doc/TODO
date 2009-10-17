@@ -10,7 +10,6 @@ the Roadmap document.
 
 Release blockers
 ----------------
-- new() function should handle an optional initial string
 - Use aprutil status consts
 
 

@@ -34,10 +34,11 @@
 
 
 // ---------------------------------------------------------------------------
-// Definition of the type name that is exposed to Python
+// Various strings that are exposed to Python and visible to the user
 // ---------------------------------------------------------------------------
 
 const char* aprmd5_md5_type_name = "md5";
+static char* aprmd5_md5_init_kwlist[] = {"input", NULL};
 
 
 // ---------------------------------------------------------------------------
@@ -65,14 +66,13 @@ static PyObject*
 aprmd5_md5_object_new(PyTypeObject* type, PyObject* args, PyObject* kwds)
 {
   aprmd5_md5_object* self = (aprmd5_md5_object*)type->tp_alloc(type, 0);
-  if (self != NULL)
+  if (NULL == self)
+    return NULL;
+  apr_status_t status = apr_md5_init(&self->context);
+  if (status)
   {
-    apr_status_t status = apr_md5_init(&self->context);
-    if (status)
-    {
-      Py_DECREF(self);
-      return NULL;
-    }
+    Py_DECREF(self);
+    return NULL;
   }
   return (PyObject*)self;
 }
@@ -84,10 +84,30 @@ aprmd5_md5_object_new(PyTypeObject* type, PyObject* args, PyObject* kwds)
 static int
 aprmd5_md5_object_init(aprmd5_md5_object* self, PyObject* args, PyObject* kwds)
 {
-  // Make sure that no arguments have been passed
-  static char* kwlist[] = {NULL};
-  if (! PyArg_ParseTupleAndKeywords(args, kwds, "|", kwlist))
+  // Get optional keyword argument
+#if PY_MAJOR_VERSION >= 3
+  // Input must be a bytes() object from which we can get a char*
+  const char* format = "|y#";
+#else
+  // Input must be a str() object from which we can get a char*. The string may
+  // contain null bytes.
+  const char* format = "|s#";
+#endif
+  const char* input = NULL;
+  Py_ssize_t inputLen = 0;
+  if (! PyArg_ParseTupleAndKeywords(args, kwds, format, aprmd5_md5_init_kwlist, &input, &inputLen))
     return -1;
+  // If there is input, feed it to the MD5 algorithm
+  if (input != NULL)
+  {
+    apr_status_t status = apr_md5_update(&self->context, input, inputLen);
+    if (status)
+    {
+      PyErr_SetString(PyExc_RuntimeError, "apr_md5_update() returned status code != 0");
+      return -1;
+    }
+  }
+
   return 0;
 }
 
@@ -239,7 +259,7 @@ aprmd5_md5_object_get_block_size(aprmd5_md5_object* self, void* closure)
 static PyObject *
 aprmd5_md5_object_get_name(aprmd5_md5_object* self, void* closure)
 {
-  return PyUnicode_FromStringAndSize("md5", 3);
+  return PyUnicode_FromStringAndSize(aprmd5_md5_type_name, strlen(aprmd5_md5_type_name));
 }
 
 
