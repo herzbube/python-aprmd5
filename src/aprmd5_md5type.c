@@ -167,9 +167,16 @@ aprmd5_md5_object_digest(aprmd5_md5_object* self, PyObject* args)
     return NULL;
   }
 
+#if PY_MAJOR_VERSION >= 3
+  // Output must be a bytes() object
+  const char* format = "y#";
+#else
+  // Output must be a str() object. The string may contain null bytes.
+  const char* format = "s#";
+#endif
   // Return the result; the Python system becomes responsible for the object
   // returned by Py_BuildValue().
-  return Py_BuildValue("y#", digest, APRMD5_MD5_DIGESTSIZE);
+  return Py_BuildValue(format, digest, APRMD5_MD5_DIGESTSIZE);
 }
 
 static PyObject*

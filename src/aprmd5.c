@@ -113,15 +113,15 @@ PyInit_aprmd5(void)
 initaprmd5(void)
 {
   // Initialize the md5 type
-  if (PyType_Ready(&aprmd5_md5Type) < 0)
+  if (PyType_Ready(&aprmd5_md5_type) < 0)
     return;
   // Create the module
   PyObject* module = Py_InitModule("aprmd5", aprmd5_methods);
   if (NULL == module)
     return;
   // Make the md5 type available
-  Py_INCREF(&aprmd5_md5Type);
-  PyModule_AddObject(module, "md5", (PyObject*)&aprmd5_md5Type);
+  Py_INCREF(&aprmd5_md5_type);
+  PyModule_AddObject(module, "md5", (PyObject*)&aprmd5_md5_type);
 }
 
 
