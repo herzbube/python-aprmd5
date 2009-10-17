@@ -8,6 +8,14 @@ For a broader view of how the project will develop over time, you should see
 the Roadmap document.
 
 
+Release blockers
+----------------
+- Remove debugging fprintf statements.
+- new() function must work
+- new() function should handle an optional initial string
+- Use aprutil status consts
+
+
 Priority 1 (important)
 ----------------------
 None
@@ -36,6 +44,7 @@ Priority 2 (nice to have)
     updated.
   - This TODO is probably moot as soon as the change to work with an md5 object
     is implemented.
+- Add PyDoc strings to implementation (PyDoc_STRVAR etc.)
 
 
 Priority 3 (not important)

@@ -1,3 +1,6 @@
+Sat Oct 17 2009   "Patrick Näf" <herzbube@herzbube.ch>
+- [feature] provide md5 object (preliminary but working version)
+
 Tue Oct 13 2009   "Patrick Näf" <herzbube@herzbube.ch>
 - [doc] updated project blurb in README
 
