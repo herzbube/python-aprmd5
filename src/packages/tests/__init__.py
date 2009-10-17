@@ -24,7 +24,6 @@ import sys
 
 # python-aprmd5
 from tests import test_md5_encode
-from tests import test_md5_operation
 from tests import test_md5
 from tests import test_password_validate
 
@@ -44,7 +43,6 @@ def allTests():
 
     suite = unittest.TestSuite()
     suite.addTests(unittest.defaultTestLoader.loadTestsFromModule(test_md5_encode))
-    suite.addTests(unittest.defaultTestLoader.loadTestsFromModule(test_md5_operation))
     suite.addTests(unittest.defaultTestLoader.loadTestsFromModule(test_md5))
     suite.addTests(unittest.defaultTestLoader.loadTestsFromModule(test_password_validate))
     return suite
