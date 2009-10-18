@@ -21,8 +21,10 @@
 # PSL
 import unittest
 import sys
+import os
 
 # python-aprmd5
+from tests import test_leak
 from tests import test_md5_encode
 from tests import test_md5
 from tests import test_password_validate
@@ -42,6 +44,8 @@ def allTests():
     """
 
     suite = unittest.TestSuite()
+    if os.name == "posix":
+        suite.addTests(unittest.defaultTestLoader.loadTestsFromModule(test_leak))
     suite.addTests(unittest.defaultTestLoader.loadTestsFromModule(test_md5_encode))
     suite.addTests(unittest.defaultTestLoader.loadTestsFromModule(test_md5))
     suite.addTests(unittest.defaultTestLoader.loadTestsFromModule(test_password_validate))

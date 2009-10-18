@@ -1,3 +1,6 @@
+Sun Oct 18 2009   "Patrick Näf" <herzbube@herzbube.ch>
+- [test] added unit test for memory leak
+
 Sat Oct 17 2009   "Patrick Näf" <herzbube@herzbube.ch>
 - [bugfix] fixed a few incompatibilities with Python 2.6 and earlier
 - [test] fixed unit tests to work with md5 object
