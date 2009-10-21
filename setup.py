@@ -64,8 +64,12 @@ extra_link_args = ["-isysroot", "/"]      # add "-t" for verbose output
 
 # Create the Extension object.
 aprmd5 = Extension("aprmd5",
-                   sources = ["src/aprmd5.c", "src/aprmd5_md5type.c", "src/aprmd5_wrappers.c", "src/aprmd5_helpers.c"],
-                   define_macros = [("APRMD5_HEADER_FILENAME", aprmd5_header_filename)],
+                   sources = ["src/extension/aprmd5.c",
+                              "src/extension/aprmd5_md5type.c",
+                              "src/extension/aprmd5_wrappers.c",
+                              "src/extension/aprmd5_helpers.c"],
+                   define_macros = [("APRMD5_HEADER_FILENAME",
+                                     aprmd5_header_filename)],
                    libraries = [aprmd5_library_filename],
                    include_dirs = include_dirs,
                    library_dirs = library_dirs,

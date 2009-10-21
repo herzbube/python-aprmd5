@@ -10,7 +10,7 @@ End user installation
 1. Download the source tar ball from the python-aprmd5 website
 2. Extract the tar ball contents
 
-     tar xfvz python-aprmd5-x.y.tar.gz
+     tar xfvzo python-aprmd5-x.y.tar.gz
 
 3. Perform a build
 
@@ -60,14 +60,14 @@ root
 +-- src
 |   +-- packages
 |   |   +-- tests
-|   +-- aprmd5.c
+|   +-- extension
 +-- doc
 
 
 Content description
 -------------------
-src/aprmd5.c
-- the single C source file of the project
+src/extension
+- contains the C sources from which the extension is built
 
 src/packages
 - a standard build of python-aprmd5 places the built extension aprmd5.so into
@@ -93,13 +93,13 @@ doc
 How to build the project
 ------------------------
 Before attempting to build the project, the file setup.py must be edited and a
-few things changed so that the build matches your system uses the correct
+few things changed so that the build matches your system and uses the correct
 version of libaprutil. Hopefully, in a future version of python-aprmd5 this
 manual editing will be replaced by auto-detection of the build system type and
 the version of libaprutil that is installed on the system.
 
 For now, however, the following variable assignments in setup.py need to be
-reviewed, and changed (or commented out) if necessary to make the build work:
+reviewed, and if necessary changed (or commented out) to make the build work:
 
   aprmd5_header_filename
   aprmd5_library_filename
@@ -128,7 +128,7 @@ The following is an example how to build the project, or run unit tests, using
 a non-default Python interpreter:
 
   /Library/Frameworks/Python.framework/Versions/3.1/bin/python3 setup.py build_ext
-  /sw/bin/python2.5 setup.py test
+  /Library/Frameworks/Python.framework/Versions/3.1/bin/python3 setup.py test
 
 Finally, the following example illustrates how to use environment variables to
 define additional include or library search paths for gcc, without having to
