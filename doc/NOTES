@@ -41,3 +41,46 @@ the most terrific feature of the distutils package. Everything that the function
 does can also be accomplished from within setup.py, when creating an instance of
 distutils.Extension(). IMHO the only advantage of this "Setup file" is when you
 are *really* desperate to keep compiler/linker flags out of setup.py.
+
+
+pydoc strings
+-------------
+To view the extension's documentation, issue this command:
+
+  PYTHONPATH=src/packages pydoc aprmd5
+
+Looking at the source code of other Python extensions hints at a method to
+provide additional pydoc strings using what is probably a preprocessor macro.
+For instance, in md5module.c of the Python 3.1 source tree the following
+line can be found:
+
+  PyDoc_STRVAR(MD5_copy__doc__, "Return a copy of the hash object.");
+
+Unfortunately, I was never able to see any string that I added to my own
+extension in a similar manner, so for the moment I abandoned the effort.
+
+
+Build into a non-standard location
+----------------------------------
+A standard build (./setup.py build_ext) of python-aprmd5 places the resulting
+shared library file somewhere below the folder "build", in a directory whose
+name depends on the target platform. This can be annoying because the name is
+not easy to remember, or it is changing from one platform to the next.
+
+There are a few interesting build variants, though, that allow to specify a
+folder where the built extensions should be placed. The advantage of this is
+that the folder name is known and constant. The drawback is that the install
+(./setup.py install) does not work from such a customized location.
+
+To build into the base directory where setup.py is located, run this command:
+
+  ./setup.py build_ext --inplace
+
+This is useful because now you don't have to specify a PYTHONPATH to run unit
+tests. Just say "./setup.py test" and you're done.
+
+To build into an arbitrary directory, run this command:
+
+  ./setup.py build_ext --build-lib=src/packages
+
+This example places the built extension into the "src/packages" folder.

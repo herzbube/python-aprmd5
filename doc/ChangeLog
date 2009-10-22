@@ -1,4 +1,9 @@
-Wed Oct 21 2009   "Patrick Näf" <herzbube@herzbube.ch>
+Thu Oct 22 2009   "Patrick Näf" <herzbube@herzbube.ch>
+- [project] released version 0.2
+- [doc] final doc changes for release of version 0.2
+- [doc] rewrote packaging details in INSTALL
+- [test] fixed memory leak unit tests to also work on Debian Linux
+- [build] rewrote large portions of release helper script build-and-test.sh
 - [project] moved C sources to new folder (src/extension)
 
 Sun Oct 18 2009   "Patrick Näf" <herzbube@herzbube.ch>
@@ -7,7 +12,7 @@ Sun Oct 18 2009   "Patrick Näf" <herzbube@herzbube.ch>
 Sat Oct 17 2009   "Patrick Näf" <herzbube@herzbube.ch>
 - [bugfix] fixed a few incompatibilities with Python 2.6 and earlier
 - [test] fixed unit tests to work with md5 object
-- [bugfix] replace wrappers related to original MD5 by md5 object [#70]
+- [feature] replace wrappers related to original MD5 by md5 object [fixes #70]
 - [bugfix] use explicit value APR_SUCCESS to check return status
 - [feature] md5.__init__() now has an optional initial input
 - [bugfix] md5.digest() now returns str object for Python 2.6 and earlier

@@ -16,30 +16,25 @@ Before the release
   - README
   - setup.py
 - make sure that the copyright year is up to date in the following files:
-  - aprmd5.c
-  - *.py
+  - *.c, *.h and *.py files in the src folder
+  - setup.py
 - run build and automated tests on development system, both for Python 2.x
   and Python 3.x; do this either in the IDE or on the command line; if you are
-  on a Mac OS X box, the following helper script does all this automatically
-  for you:
+  on a Mac OS X or Debian Linux box, the following helper script does all this
+  automatically for you:
     ./build-and-test.sh
 - make the source distribution tar ball by issuing the following commands (check
   the command's output for suspicious warnings, although you can ignore warnings
   about missing README, .DS_Store and *.pyc files):
     cd <projectdir>
     ./setup.py sdist
-- take the source distribution tar ball to another system, install it on that
-  system (includes a build), and run the unit tests:
-    cd ~
+- take the source distribution tar ball to another system, run build and
+  automated tests on that system, and simulate an install; again,
+  build-and-test.sh is your friend on Mac OS X and Debian Linux;
     tar xfvzo python-aprmd5-x.y.tar.gz
     cd python-aprmd5-x.y
-    mv setup.cfg setup.cfg.bak
     --- manually edit setup.py so that the project builds ---
-    for PYTHON_VER in 2.5 2.6 3.1; do
-      python$PYTHON_VER setup.py install --home=~/aprmd5-test
-      PYTHONPATH=~/aprmd5-test/lib/python python$PYTHON_VER setup.py test
-      rm -rf ../aprmd5-test
-    done
+    ./build-and-test.sh
     cd ..
     rm -r python-aprmd5-x.y
 - commit final changes (check with "git status" that nothing was forgotten)
@@ -58,6 +53,8 @@ Make the release
 - add the new version number to the bug tracker so that issues can be reported
   once the release has been made public
 - update the website to announce the new release
+- push release to PyPi
+  /Library/Frameworks/Python.framework/Versions/3.1/bin/python3.1 setup.py register
 
 
 After the release

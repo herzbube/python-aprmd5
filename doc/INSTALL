@@ -46,9 +46,11 @@ ball is a so-called "source distribution" intended to be converted by a packager
 into a so-called "built distribution" (e.g. an RPM or Debian package).
 
 If you are a packager, the next two sections give you an overview of the source
-distribution's directory structure and the content of each directory. The final
-section provides details about the changes that are necessary to make
-python-aprmd5 work on different platforms with different versions of libaprutil.
+distribution's directory structure and the content of each directory. Another
+section provides details about the changes that are necessary to build
+python-aprmd5 on different platforms with different versions of libaprutil. The
+final section has information on how to run automated tests to check whether
+the built extension works correctly.
 
 
 Directory structure
@@ -69,17 +71,10 @@ Content description
 src/extension
 - contains the C sources from which the extension is built
 
-src/packages
-- a standard build of python-aprmd5 places the built extension aprmd5.so into
-  this folder; from there, the built extension will go into the built
-  distribution
-- the built extension's final destination is somewhere within the PYTHONPATH
-  (e.g. /usr/lib/python2.5 on a Debian system)
-
 src/packages/tests
-- contains automated tests that can be run, after performing a standard build
-  of python-aprmd5, from the root folder using
-    python setup.py test
+- contains automated tests that can be run to check whether python-aprmd5
+  behaves as it should on your system; for details read the section
+  "How to test python-aprmd5" further down
 - the test files are not intended to go into the built distribution, although
   you may certainly include them if you wish to do so
 
@@ -114,24 +109,62 @@ following command:
 
   ./setup.py build_ext
 
-If the build succeeds, you can find the built extension in this location:
+The following is an example how to build the project using a non-default Python
+interpreter:
 
-  src/packages/aprmd5.so
+  /Library/Frameworks/Python.framework/Versions/3.1/bin/python3.1 setup.py build_ext
 
-This location is defined in the file setup.cfg. If required it can be changed,
-but then setup.py will no longer be able to run the project's unit tests. After
-a successful standard build, unit tests may be run with the following command:
+If the build succeeds, you can find the built extension somewhere below the
+folder "build", in a directory whose name depends on the target platform. For
+instance when I build python-aprmd5 with Python 3.1 on my PPC Mac box, the
+extension is built here:
 
-  ./setup.py test
-
-The following is an example how to build the project, or run unit tests, using
-a non-default Python interpreter:
-
-  /Library/Frameworks/Python.framework/Versions/3.1/bin/python3 setup.py build_ext
-  /Library/Frameworks/Python.framework/Versions/3.1/bin/python3 setup.py test
+  build/lib.macosx-10.3-fat-3.1/aprmd5.so
 
 Finally, the following example illustrates how to use environment variables to
 define additional include or library search paths for gcc, without having to
 modify setup.py:
 
   CPATH=/sw/include LIBRARY_PATH=/sw/lib ./setup.py build_ext
+
+  
+How to test python-aprmd5
+-------------------------
+The "src/packages/tests" folder contains a number of unit tests that can be
+automatically run like this:
+
+  ./setup.py test
+
+To run tests from only one module (test_md5_encode.py in this example):
+
+  ./setup.py test --suite=tests.test_md5_encode
+
+If python-aprmd5 hasn't been installed on a system, the examples above probably
+won't work because Python does not know where to find the built extension. The
+problem can be fixed, for instance, by building python-aprmd5 into a known
+location - the current directory:
+
+  ./setup.py build_ext --inplace
+  ./setup.py test
+
+Another solution is to set PYTHONPATH to make the location of the built
+extension known to the Python interpreter. For instance, after I have built the
+extension with Python 3.1 on my PPC Mac box, I can run the following:
+
+  PYTHONPATH=build/lib.macosx-10.3-fat-3.1 ./setup.py test
+
+
+build-and-test.sh
+-----------------
+build-and-test.sh is a helper script that, for every Python version specified,
+automatically performs the following steps:
+
+1. Build the extension (setup.py build_ext)
+2. Run unit tests (setup.py test)
+3. Perform a test installation (setup.py install)
+
+I use the script before I make a release, to test whether python-aprmd5 builds,
+runs and installs on Mac OS X and Debian Linux (the two system types available
+to me). You may find the script useful, although there is no guarantee
+whatsoever that it works on other configurations than my own two systems that
+I use for development.

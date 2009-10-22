@@ -60,10 +60,14 @@ class MemoryLeakTest(unittest.TestCase):
 
     def testRefCountCreate(self):
         """Tests if reference count is set correctly on creation"""
-        # Not sure why, but on my Mac box I have to do this, otherwise tests
-        # fail with memory usage difference of 4 KB. Probably some internals
-        # of Python claim memory when the first md5 object is created...
+        # Not sure why, but the following statements need to be run once before
+        # mem() is invoked to get a stable initial memory footprint. If these
+        # statements are not run, the initial memory footprint is ***always***
+        # different from the one after the loop. I can only guess that these
+        # statements have side-effects in Python that claim memory when they
+        # are run for the first time...
         md5()
+        mem()
         # The number of md5 objects to create. Should be high enough so that
         # the cumulative memory leak (if it exists) is greater than a memory
         # page size (see limitations of mem()).
@@ -82,7 +86,11 @@ class MemoryLeakTest(unittest.TestCase):
 
     def testRefCountCopy(self):
         """Tests if reference count is set correctly on md5.copy()"""
+        # See comment in the first test method above why these statements are
+        # necessary
         md5()
+        mem()
+        # The actual test starts here
         objectCount = 10000
         memory = mem()
         while objectCount > 0:
@@ -92,7 +100,11 @@ class MemoryLeakTest(unittest.TestCase):
 
     def testRefCountHash(self):
         """Tests if no memory leaks occur when performing a hash operation"""
+        # See comment in the first test method above why these statements are
+        # necessary
         m = md5(self.inputNormal)
+        mem()
+        # The actual test starts here
         objectCount = 10000
         memory = mem()
         while objectCount > 0:

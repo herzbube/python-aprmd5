@@ -81,6 +81,7 @@ aprmd5_md5_object_new(PyTypeObject* type, PyObject* args, PyObject* kwds)
 // created by class.__new__(). It is exposed in Python as obj.__init__() method.
 // __init__() is not guaranteed to be called: It is not called when an object
 // is unpickled, and subclasses may also play dirty and not call __init__().
+
 static int
 aprmd5_md5_object_init(aprmd5_md5_object* self, PyObject* args, PyObject* kwds)
 {
@@ -286,19 +287,19 @@ static PyGetSetDef aprmd5_md5_object_getseters[] =
   {
     "digest_size",
     (getter)aprmd5_md5_object_get_digest_size, NULL,
-    "The size of the resulting hash in bytes.",
+    "The size of the MD5 hash in bytes.",
     NULL
   },
   {
     "block_size",
     (getter)aprmd5_md5_object_get_block_size, NULL,
-    "The internal block size of the hash algorithm in bytes.",
+    "The internal block size of the MD5 hash algorithm in bytes.",
     NULL
   },
   {
     "name",
     (getter)aprmd5_md5_object_get_name, NULL,
-    NULL,
+    "The name of the md5 object.",
     NULL
   },
   {NULL}  /* Sentinel */
@@ -308,11 +309,11 @@ static PyMethodDef aprmd5_md5_object_methods[] =
 {
   {
     "update", (PyCFunction)aprmd5_md5_object_update, METH_VARARGS,
-    "Update the hash object with the object arg, which must be interpretable as a buffer of bytes. Repeated calls are equivalent to a single call with the concatenation of all the arguments: m.update(a); m.update(b) is equivalent to m.update(a+b)."
+    "Update the hash object with the object arg, which must be a bytes object (Python 3.x) or a string object (Python 2.6 and earlier). Repeated calls are equivalent to a single call with the concatenation of all the arguments: m.update(a); m.update(b) is equivalent to m.update(a+b)."
   },
   {
     "digest", (PyCFunction)aprmd5_md5_object_digest, METH_NOARGS,
-    "Return the digest of the data passed to the update() method so far. This is a bytes array of size digest_size which may contain bytes in the whole range from 0 to 255."
+    "Return the digest of the data passed to the update() method so far. This is a bytes array (Python 3.x) or a string object (Python 2.6 and earlier) of size digest_size which may contain bytes in the whole range from 0 to 255."
   },
   {
     "hexdigest", (PyCFunction)aprmd5_md5_object_hexdigest, METH_NOARGS,
@@ -356,7 +357,7 @@ PyTypeObject aprmd5_md5_type =
   Py_TPFLAGS_DEFAULT,            // tp_flags; Py_TPFLAGS_DEFAULT enables all
                                  // members defined by the version of Python
                                  // that this is compiled for
-  "md5 objects",                 // tp_doc
+  "Instances of this class are used to generate MD5 hashes", // tp_doc
   0,                             // tp_traverse
   0,                             // tp_clear
   0,                             // tp_richcompare
@@ -405,7 +406,7 @@ PyTypeObject aprmd5_md5_type =
   Py_TPFLAGS_DEFAULT,            // tp_flags; Py_TPFLAGS_DEFAULT enables all
                                  // members defined by the version of Python
                                  // that this is compiled for
-  "md5 objects",                 // tp_doc
+  "Instances of this class are used to generate MD5 hashes", // tp_doc
   0,                             // tp_traverse
   0,                             // tp_clear
   0,                             // tp_richcompare

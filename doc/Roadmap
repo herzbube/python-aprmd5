@@ -10,9 +10,9 @@ on the TODO list becomes important, it is possible to move it from there to
 this roadmap.
 
 
-Version 0.2
+Version 0.2 (Oct 22 2009)
 - implement working with md5 object instead of exposing apr_md5_init(),
   apr_md5_update() and apr_md5_final()
 
-Version 0.1
+Version 0.1 (Oct 10 2009)
 - first version suitable for public release

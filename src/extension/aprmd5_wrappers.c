@@ -144,11 +144,11 @@ PyMethodDef aprmd5_methods[] =
 {
   {
     "md5_encode", aprmd5_md5_encode, METH_VARARGS,
-    "Encode a password using an MD5 algorithm modified for Apache."
+    "Encode a password using an MD5 algorithm modified for the APR project."
   },
   {
     "password_validate", aprmd5_password_validate, METH_VARARGS,
-    "Validate any password encypted with any algorithm that APR understands."
+    "Validate any password encrypted with any algorithm that APR understands."
   },
   {NULL, NULL, 0, NULL}   // Sentinel
 };
