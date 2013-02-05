@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # encoding=utf-8
 
-# Copyright 2009 Patrick Näf
+# Copyright 2009-2013 Patrick Näf
 # 
 # This file is part of python-aprmd5
 #
@@ -145,7 +145,7 @@ setup(
       cmdclass = { "test" : test },
       # Meta-data
       name="python-aprmd5",
-      version="0.2",
+      version="0.2.1",
       url="https://github.com/herzbube/python-aprmd5",
       author="Patrick Näf",
       author_email="herzbube@herzbube.ch",

@@ -15,9 +15,10 @@ None
 
 Priority 2 (nice to have)
 -------------------------
-- [#71] setup.py should auto-detect the platform that it is running on, i.e. it
+- [#1] setup.py should auto-detect the platform that it is running on, i.e. it
   should not be necessary to manually edit setup.py to make platform-specific
-  changes (autoconf?)
+  changes (autoconf?). This is partially implemented for Mac OS X and Debian,
+  but not for Windows, and other versions of libaprutil are also not detected.
 
 
 Priority 3 (not important)

@@ -28,12 +28,13 @@ the Python Standard Library module `hashlib`. In fact I advise against using
 
 Release notes
 =============
-This is `python-aprmd5` 0.2.
+This is `python-aprmd5` 0.2.1.
 
 Changes in this release:
 
-* [feature] replace wrappers related to original MD5 by md5 object [fixes #70]
-* [bugfix] fixed a few incompatibilities with Python 2.6 and earlier
+* patch for setup.py by Juan A. Diaz to auto-detect Mac OS X and Debian
+* the project has moved to GitHub
+* no functional changes
 
 For more details see the `ChangeLog` document.
 
