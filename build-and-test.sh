@@ -4,7 +4,7 @@
 MYNAME="$(basename "$0")"
 LOGFILE="$MYNAME.log"
 BUILD_FOLDER="build"
-BUILT_EXTENSION_FILE_NAME="aprmd5.so"
+BUILT_EXTENSION_FILE_NAME="aprmd5*.so"
 TMP_FOLDER="/tmp/$MYNAME.$$"
 INSTALL_FOLDER="$TMP_FOLDER/install"
 # Unset these to skip the corresponding steps
