@@ -29,25 +29,28 @@ import sys
 # and the library file that we are going to use for linking.
 
 # Mac OS X 10.5 (system)
-aprmd5_header_filename = "<apr-1/apr_md5.h>"
-aprmd5_library_filename = "aprutil-1"
+if sys.platform.startswith('darwin'):
+    aprmd5_header_filename = "<apr-1/apr_md5.h>"
+    aprmd5_library_filename = "aprutil-1"
 
 # Mac OS X, provided by fink (package apr-dev)
 #aprmd5_header_filename = "<apr-0/apr_md5.h>"
 #aprmd5_library_filename = "aprutil-0"
 
-# Debian lenny (package libaprutil1-dev)
-#aprmd5_header_filename = "<apr-1.0/apr_md5.h>"
-#aprmd5_library_filename = "aprutil-1"
+# Debian (package libaprutil1-dev)
+elif sys.platform.startswith('linux'):
+    aprmd5_header_filename = "<apr-1.0/apr_md5.h>"
+    aprmd5_library_filename = "aprutil-1"
 
 
 # Here we define extra compiler/linker arguments.
 
 # Mac OS X 10.5 (system)
-include_dirs = None
-library_dirs = None
-extra_compile_args = ["-isysroot", "/"]   # add "-v" for verbose output
-extra_link_args = ["-isysroot", "/"]      # add "-t" for verbose output
+if sys.platform.startswith('darwin'):
+    include_dirs = None
+    library_dirs = None
+    extra_compile_args = ["-isysroot", "/"]   # add "-v" for verbose output
+    extra_link_args = ["-isysroot", "/"]      # add "-t" for verbose output
 
 # Mac OS X, provided by fink (package apr-dev)
 #include_dirs = ["/sw/include"]
@@ -55,11 +58,12 @@ extra_link_args = ["-isysroot", "/"]      # add "-t" for verbose output
 #extra_compile_args = None
 #extra_link_args = None
 
-# Debian lenny (package libaprutil1-dev)
-#include_dirs = None
-#library_dirs = None
-#extra_compile_args = None
-#extra_link_args = None
+# Debian (package libaprutil1-dev)
+elif sys.platform.startswith('linux'):
+    include_dirs = None
+    library_dirs = None
+    extra_compile_args = None
+    extra_link_args = None
 
 
 # Create the Extension object.
@@ -142,7 +146,7 @@ setup(
       # Meta-data
       name="python-aprmd5",
       version="0.2",
-      url="http://www.herzbube.ch/python-aprmd5",
+      url="https://github.com/herzbube/python-aprmd5",
       author="Patrick Näf",
       author_email="herzbube@herzbube.ch",
       classifiers = [
