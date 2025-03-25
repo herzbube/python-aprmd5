@@ -129,3 +129,8 @@ from Python 3.
     # result1 and result2 will both be "acbd18db4cc2f85cedef654fccc4a4d8"
     result1 = m1.hexdigest()
     result2 = m2.hexdigest()
+
+Installation instructions
+=========================
+The tar balls that can be downloaded under ["Releases" on the project page](https://github.com/herzbube/python-aprmd5/releases) have been created using the Distutils Python module. In the terminology of Distutils, the tar ball is a so-called "source distribution". Read the file INSTALL inside the tar ball for more details about how to build the project and use the resulting Python module.
+
